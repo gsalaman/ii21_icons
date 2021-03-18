@@ -1,7 +1,7 @@
 import serial
 import time
 
-def get_button():
+def read():
   global ser
 
   if ser.inWaiting() == 0:
@@ -17,7 +17,7 @@ def get_button():
   
     # first check...do we have the right number of chars?
     if len(line) != 3:
-      print("not text we care about")
+      #print("not text we care about")
       return None
 
     # a little check:  the two numbers should be between 0 and 7.
@@ -36,26 +36,15 @@ def get_button():
     return(x_button,y_button,action_type)
     
   else:
-    print("Unexpected serial command:" + line)
+    #print("Unexpected serial command:" + line)
+    pass
 
   ser.flushInput() 
 
-print("running")
+#print("running")
 #ser = serial.Serial("/dev/ttyACM0", 9600, timeout=1) 
 ser = serial.Serial("/dev/ttyUSB0", 9600, timeout=1) 
 
 time.sleep(0.01) # wait for serial port to open.
 if ser.isOpen():
-  print("connected!")
-
-  while True:
-    my_button = get_button()
-    if my_button != None:
-      print("Main - type:",my_button[2])
-      print("Main - button x: "+str(my_button[0]))
-      print("Main - button y: "+str(my_button[1]))
-
-    time.sleep(0.01)
-
-
-
+  print("serial connected!")
